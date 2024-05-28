@@ -2,8 +2,10 @@
 const express = require('express')
 const router = express.Router() 
 
+const connection = require('../database/db')
 //Apuntar a una ruta del server
 router.get('/',(req, res)=>{
+    connection()
     res.render('index')
 })
 
