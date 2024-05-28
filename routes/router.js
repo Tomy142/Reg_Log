@@ -1,0 +1,15 @@
+// Definir las rutas para las vistas y rutas para llamar al controlador
+const express = require('express')
+const router = express.Router() 
+
+//Apuntar a una ruta del server
+router.get('/',(req, res)=>{
+    res.render('index')
+})
+
+//Ruta para el login
+router.get('/login',(req, res)=>{
+    res.render('login')
+})
+
+module.exports = router

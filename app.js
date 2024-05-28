@@ -22,11 +22,14 @@ dotenv.config({path:'./env/.env'})
 //Setear cookies
 //app.use(cookieParser)
 
+//Llamar al router
+app.use('/', require('./routes/router'))
+
 //Apuntar a una ruta del server
-app.get('/',(req, res)=>{
+/*app.get('/',(req, res)=>{
     res.render('index')
 })
-
+*/
 // Accedo a los metodos con app. y control status server
 app.listen(3000, ()=>{
     console.log('SERVER UP running in https://localhost:3000')
