@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Editar Álbumes y Sencillos</title>
+        <link rel="stylesheet" href="/css/edit_content_style.css">
+    </head>
+    <body>
+        <!-- Barra superior -->
+        <div class="top_bar">
+            <h1 class="title_bar">Editar Álbumes y Sencillos</h1>
+        </div>
+
+        <!-- Botón para volver al dashboard -->
+        <a class="go_back_b" href="/dashboard">
+            <img class="arrow_back" src="/assets/img/flecha-atras.png" alt="Volver al dashboard">
+        </a>
+
+        <!-- Botón de logout -->
+        <a class="logout_b" href="/">
+            <img class="logout_i" src="/assets/img/cerrar_sesion.png" alt="Cerrar sesión">
+        </a>
+
+        <!-- Mensajes de éxito o error -->
+        <% if (typeof success !== 'undefined') { %>
+            <div class="success-box"><%= success %></div>
+        <% } %>
+        <% if (typeof error !== 'undefined') { %>
+            <div class="error-box"><%= error %></div>
+        <% } %>
+
+        <!-- Caja de edición -->
+        <div class="adding_boxes">
+            <div class="middle_box">
+                <h2 class="add_options">Edición de Contenido Subido</h2>
+            </div>
+            <!-- Búsqueda -->
+            <form action="/edit-content" method="POST" class="search-form">
+                <input type="hidden" name="action" value="search">
+                <div class="search_container">
+                    <input required type="text" id="search_name" name="search_name" minlength="3" placeholder="Buscar contenido...">
+                    <button class="search_btn" type="submit">
+                        <img class="search_icon" src="/assets/img/lupa.png" alt="Buscar">
+                    </button>
+                </div>
+            </form>
+
+            <!-- Resultados -->
+            <div class="results_container">
+                <% if (songs && songs.length > 0) { %>
+                    <h3>Canciones encontradas:</h3>
+                    <ul class="search_results">
+                        <% songs.forEach(song => { %>
+                            <li>
+                                <form action="/edit-content" method="POST" class="edit-form">
+                                    <input type="hidden" name="action" value="update_song">
+                                    <input type="hidden" name="song_id" value="<%= song.id %>">
+                                    <input type="text" name="song_name" value="<%= song.title %>" required>
+                                    <input type="date" name="song_date" value="<%= song.created_at %>" required>
+                                    <button type="submit" class="edit_btn">Guardar</button>
+                                </form>
+                                <form action="/edit-content" method="POST" style="display: inline;">
+                                    <input type="hidden" name="action" value="delete_song">
+                                    <input type="hidden" name="song_id" value="<%= song.id %>">
+                                    <button type="submit" class="delete_btn">Eliminar</button>
+                                </form>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+
+                <% if (albums && albums.length > 0) { %>
+                    <h3>Álbumes encontrados:</h3>
+                    <ul class="search_results">
+                        <% albums.forEach(album => { %>
+                            <li>
+                                <form action="/edit-content" method="POST" class="edit-form">
+                                    <input type="hidden" name="action" value="update_album">
+                                    <input type="hidden" name="album_id" value="<%= album.id %>">
+                                    <input type="text" name="album_name" value="<%= album.title %>" required>
+                                    <input type="date" name="album_date" value="<%= album.release_date %>" required>
+                                    <button type="submit" class="edit_btn">Guardar</button>
+                                </form>
+                                <form action="/edit-content" method="POST" style="display: inline;">
+                                    <input type="hidden" name="action" value="delete_album">
+                                    <input type="hidden" name="album_id" value="<%= album.id %>">
+                                    <button type="submit" class="delete_btn">Eliminar</button>
+                                </form>
+                                <!-- Lista de canciones en el álbum -->
+                                <% if (album.songs && album.songs.length > 0) { %>
+                                    <ul class="album_songs">
+                                        <% album.songs.forEach(song => { %>
+                                            <li>
+                                                <%= song.title %>
+                                                <form action="/edit-content" method="POST" style="display: inline;">
+                                                    <input type="hidden" name="action" value="remove_song_from_album">
+                                                    <input type="hidden" name="album_id" value="<%= album.id %>">
+                                                    <input type="hidden" name="song_id" value="<%= song.id %>">
+                                                    <button type="submit" class="remove_btn">Desvincular</button>
+                                                </form>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                                <% } %>
+                                <!-- Agregar canciones al álbum -->
+                                <form action="/edit-content" method="POST" class="add-song-form">
+                                    <input type="hidden" name="action" value="add_song_to_album">
+                                    <input type="hidden" name="album_id" value="<%= album.id %>">
+                                    <select name="song_id" required>
+                                        <option value="">--Seleccionar canción--</option>
+                                        <% allSongs.forEach(song => { %>
+                                            <option value="<%= song.id %>"><%= song.title %></option>
+                                        <% }); %>
+                                    </select>
+                                    <button type="submit" class="add_btn">Agregar</button>
+                                </form>
+                            </li>
+                        <% }); %>
+                    </ul>
+                <% } %>
+            </div>
+        </div>
+
+        <script>
+            document.querySelector('.search-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const searchTerm = document.getElementById('search_name').value;
+                const response = await fetch('/edit-content', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `action=search&search_name=${encodeURIComponent(searchTerm)}`
+                });
+                const html = await response.text();
+                document.querySelector('.results_container').innerHTML = new DOMParser().parseFromString(html, 'text/html').querySelector('.results_container').innerHTML;
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,104 @@
+body {
+    background: linear-gradient(to bottom ,steelblue, lightgrey);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding:  0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.log_title{
+    color: wheat;
+    font-family: Merriweather;
+    font-size: 70px; /* Aumentado */
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 
+        -1px -1px 0 black,  
+        1px -1px 0 black,  
+        -1px  1px 0 black,  
+        1px  1px 0 black;
+    margin-bottom: 30px; /* Aumentado */
+}
+
+.form_l{
+    display: inline;
+    width: 800px; /* Aumentado */
+    background-color: papayawhip;
+    padding: 30px; /* Aumentado */
+    box-shadow: 
+        -5px -5px 0 black,  
+        5px -5px 0 black,  
+        -5px  5px 0 black,  
+        5px  5px 0 black;
+}
+
+h4 {
+    font-family: Merriweather;
+    font-size: 24px; /* Aumentado */
+}
+
+h3{   
+    font-size: medium;
+}
+
+.error-box{
+    padding: 10px;
+    background-color: rgb(255, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: Merriweather;
+    font-size: 18px;
+    text-shadow: 
+        -1px -1px 0 black,  
+        1px -1px 0 black,  
+        -1px  1px 0 black,  
+        1px  1px 0 black;
+    color: wheat;
+}
+
+input[type="text"],
+input[type="password"]{
+    font-size: 18px; /* Aumentado */
+    padding: 10px; /* Aumentado */
+    margin-bottom: 20px; /* Separación aumentada */
+    width: 95%;
+}
+
+.reg_red{
+    color: darkblue;
+    text-decoration: none;
+    text-align:left;
+    border-radius: 5px;
+    padding: 0;
+    margin: 0;
+    width: auto;
+    display: inline;
+    
+}
+
+.reg_red:hover{
+    background-color: lightgrey; /* Cambia el color al pasar el cursor */
+    color: steelblue;
+}
+
+.login_btn {
+    width: 200px;
+    margin-top: 0px;
+    margin-left: 200px;
+    padding: 10px 20px; /* Aumentado */
+    font-size: 18px; /* Aumentado */
+    background-color: greenyellow;
+    font-family: Merriweather;
+}
+
+.login_btn:hover {
+    background-color: coral;
+}

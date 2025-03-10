@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Mi Perfil</title>
+        <link rel="stylesheet" href="/css/profile_style.css">
+    </head>
+    <body>
+        <!-- Barra superior -->
+        <div class="top_bar">
+            <h1 class="title_bar">Bienvenido a su perfil!!</h1>
+        </div>
+
+        <!-- Botón para volver al dashboard -->
+        <a class="go_back_b" href="/dashboard">
+            <img class="arrow_back" src="/assets/img/flecha-atras.png" alt="Volver al dashboard">
+        </a>
+
+        <!-- Botón de logout -->
+        <a class="logout_b" href="/">
+            <img class="logout_i" src="/assets/img/cerrar_sesion.png" alt="Cerrar sesión">
+        </a>
+
+        <% if (typeof error !== 'undefined') { %>
+            <div class="error-box"><%= error %></div>
+        <% } %>
+
+        <% if (typeof success !== 'undefined') { %>
+            <div class="success-box"><%= success %></div>
+        <% } %>
+    
+        <div class="adding_boxes">
+            <div class="middle_box" >
+                <h2 class="add_options">Edición de su perfil</h2>
+            </div>
+            <form action="/profile" method="POST" enctype="multipart/form-data">
+                <label class="text_description" for="profile_pic">Añadir foto de perfil:</label>
+                <input class="content_boxes" type="file" id="upload_pic" name="upload_pic" accept="image/*">
+                <% if (user.profile_picture) { %>
+                    <img class="current_picture" src="<%= user.profile_picture %>" alt="Foto actual">
+                <% } %>
+
+                <div class="form-group">
+                    <label class="text_description" for="instagram">Añadir Instagram:</label>
+                    <input class="content_boxes" type="url" id="instagram" name="instagram" value="<%= user.instagram_link || '' %>" placeholder="https://instagram.com/tu_perfil">
+                </div>
+
+                <div class="form-group">
+                    <label class="text_description" for="facebook">Añadir Facebook:</label>
+                    <input class="content_boxes" type="url" id="facebook" name="facebook" value="<%= user.facebook_link || '' %>" placeholder="https://facebook.com/tu_perfil">
+                </div>
+
+                <div class="form-group">
+                    <label class="text_description" for="twitter">Añadir Twitter/X:</label>
+                    <input class="content_boxes" type="url" id="twitter" name="twitter" value="<%= user.twitter_link || '' %>" placeholder="https://twitter.com/tu_perfil">
+                </div>
+
+                <div class="form-group">
+                    <label class="text_description" for="youtube">Añadir YouTube:</label>
+                    <input class="content_boxes"type="url" id="youtube" name="youtube" value="<%= user.youtube_link || '' %>" placeholder="https://youtube.com/tu_canal">
+                </div>
+                
+                <div class="form-group">
+                    <label class="text_description" for="donation">Ingrese su CVU/CBU para donaciones:</label>
+                    <input class="content_boxes" type="text" name="cbu_cvu" id="cbu_cvu" pattern="\d{22}" maxlength="22" minlength="22" value="<%= user.cvu_cbu || '' %>" placeholder="Minimo de 22 numeros">
+                </div>
+
+                <div class="save_container">
+                    <button class="save_edit" type="submit">Guardar Edición</button>
+                </div>
+            </form>
+        </div>
+    </body>
+</html>

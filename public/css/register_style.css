@@ -1,0 +1,137 @@
+body {
+    background: linear-gradient(to bottom ,steelblue, lightgrey);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form_title {
+    color: wheat;
+    font-family: Merriweather;
+    font-size: 70px; /* Aumentado */
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 
+        -1px -1px 0 black,  
+         1px -1px 0 black,  
+        -1px  1px 0 black,  
+         1px  1px 0 black;
+    margin-bottom: 30px; /* Aumentado */
+}
+
+h4 {
+    font-family: Merriweather;
+    font-size: 24px; /* Aumentado */
+}
+
+.error-box{
+    padding: 10px;
+    background-color: rgb(255, 0, 0);
+    border: 2px solid rgb(0, 0, 0);
+    border-radius: 5px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: Merriweather;
+    font-size: 18px;
+    text-shadow: 
+        -1px -1px 0 black,  
+        1px -1px 0 black,  
+        -1px  1px 0 black,  
+        1px  1px 0 black;
+    color: wheat;
+}
+
+.form_s {
+    display: grid;
+    width: 400px; /* Aumentado */
+    background-color: papayawhip;
+    padding: 30px; /* Aumentado */
+    box-shadow: 
+        -5px -5px 0 black,  
+        5px -5px 0 black,  
+        -5px  5px 0 black,  
+        5px  5px 0 black;
+}
+
+.password-container{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.password-container input{
+    width: 95%;
+    padding: 10px;
+    font-size: 18px;
+    font-family: Merriweather;
+}
+
+.toggle-password{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: steelblue;
+}
+
+.toggle-password:hover{
+    color: coral;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    font-size: 18px; /* Aumentado */
+    padding: 5px; /* Aumentado */
+    margin-bottom: 5px; /* Separación aumentada */
+    width: 95%;
+}
+
+.radio-group {
+    display: flex;
+    gap: 15px; /* Aumentado el espacio entre opciones */
+    align-items: center;
+    font-family: Merriweather;
+    font-size: 20px; /* Aumentado */
+}
+
+.radio-group label {
+    margin-right: 5px;
+    
+}
+
+.submit_b {
+    margin-top: 20px;
+    padding: 10px 20px; /* Aumentado */
+    font-size: 18px; /* Aumentado */
+    background-color: greenyellow;
+    font-family: Merriweather;
+}
+
+.submit_b:hover {
+    background-color: coral;
+}
+
+.log_red{
+    color: darkblue;
+    text-decoration: none;
+    margin-top: 20px;
+    text-align: center;
+    border-radius: 5px;
+    padding: 0;
+}
+
+.log_red:hover{
+    background-color: lightgrey; /* Cambia el color al pasar el cursor */
+    color: steelblue;
+}

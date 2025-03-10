@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Añadir Album o Sencillo</title>
+        <link rel="stylesheet" href="/css/add_music_style.css"> <!-- Ajustada la ruta -->
+    </head>
+    <body>
+        <div class="top_bar">
+            <h1 class="title_bar">Añadir Contenido</h1>
+        </div>
+
+        <!-- Botón de logout -->
+        <a class="logout_b" href="/logout">
+            <img class="logout_i" src="/assets/img/cerrar_sesion.png" alt="Cerrar sesión">
+        </a>
+
+        <% if(typeof error !== 'undefined'){ %>
+            <div class="error-box"><%= error%></div>
+        <% } %>
+
+        <% if(typeof success !== 'undefined'){ %>
+            <div class="success-box"><%= success %></div>
+        <% } %>
+
+        <!-- Caja de añadir música -->
+        <div class="adding_boxes">
+            <div class="middle_box" >
+                <h2 class="add_options">Subir un sencillo</h2>
+            </div>
+            <form action="/add-content"  method="POST" enctype="multipart/form-data">
+                <label class="text_description" for="song_name">Nombre del sencillo:</label>
+                <input required class="content_boxes" type="text" id="song_name" name="song_name" required minlength="3">
+    
+                <label class="text_description" for="release_date">Seleccione una fecha de salida:</label>
+                <input required class="content_boxes" type="date" id="release_date" name="release_date">
+
+                <label class="text_description" for="upload_file">Subir archivo</label>
+                <input  required class="content_boxes" type="file" id="upload_file" name="upload_file">
+    
+                <button  class="submit" type="submit">Subir</button>
+            </form>
+            
+        </div>
+        
+        <!-- Caja crear album -->
+        <div class="adding_boxes">
+            <div class="middle_box" >
+                <h2 class="add_options">Crear un album</h2>
+            </div>
+            <form action="/add-album" method="POST">
+                <label class="text_description" for="album_name">Nombre del album:</label>
+                <input required class="content_boxes" type="text" id="album_name" name="album_name" required minlength="3">
+    
+                <label class="text_description" for="release_date">Seleccione una fecha de salida:</label>
+                <input required class="content_boxes" type="date" id="release_date" name="release_date">
+
+                <button  class="submit" type="submit">Crear</button>
+            </form>
+            
+        </div>
+        
+
+        <!-- Botón para volver al dashboard -->
+        <a class="go_back_b" href="/dashboard" style="display: inline-block; text-decoration: none;">
+            <img class="arrow_back" src="/assets/img/flecha-atras.png" alt="Volver al dashboard">
+        </a>
+        
+    </body>
+</html>

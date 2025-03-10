@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de <%= user.username %> - Un mar de Músicas</title>
+    <link rel="stylesheet" href="/css/profile_public_style.css">
+</head>
+<body>
+    <div class="top_bar">
+        <h1 class="title_bar"> Un mar de músicas</h1>
+        <a class="go_back_b" href="/dashboard">
+            <img class="arrow_back" src="/assets/img/flecha-atras.png" alt="Volver al dashboard">
+        </a>
+
+        <a class="logout_b" href="/logout">
+            <img class="logout_i" src="/assets/img/cerrar_sesion.png" alt="Cerrar sesión">
+        </a>
+    </div>
+
+    <% if (typeof error !== 'undefined'){ %>
+        <div class="error-box"><%= error %></div>
+    <% } %>
+
+    <div class="adding_boxes">
+        <div class="profile_container">
+            <img  class="profile_picture" src=" <%= user.profile_picture || ' /assets/img/default_profile.png' %>" alt="Foto de perfil">
+            <h2><%= user.username %></h2>
+            <div class="social_links">
+                <% if (user.facebook_link) { %><a href="<%= user.facebook_link %>">Facebook</a><% } %>
+                <% if (user.instagram_link) { %><a href="<%= user.instagram_link %>">Instagram</a><% } %>
+                <% if (user.youtube_link) { %><a href="<%= user.youtube_link %> ">Youtube</a><% } %>
+                <% if (user.twitter_link) { %><a href="<%= user.twitter_link %>">X/Twitter</a><% } %>
+            </div>
+            <% if (user.cvu_cbu) { %>
+                <p> CVU/CBU: <%= user.cvu_cbu %></p>
+            <% } %>
+        </div>
+
+        <div class="songs_section">
+            <h3>Canciones</h3>
+            <% if (songs && songs.length > 0) { %>
+                <ul class="song_list">
+                    <% songs.forEach(song => { %>
+                        <li>
+                            <%= song.title %> -Subida el <%= song.created_at %>
+                            <audio controls controlsList="nodownload">
+                                <source src="<%= song.file_path %>" type="audio/mpeg">
+                                Tu navegador no soporta el elemento de audio.
+                            </audio>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% }else { %>
+                <p>No hay canciones disponibles.</p>
+            <% } %>
+        </div>
+
+        <div class="albums_section">
+            <h3>Álbumes</h3>
+            <% if (albums && albums.length > 0) { %>
+                <ul class="album_list">
+                    <% albums.forEach(album => { %>
+                        <li>
+                            <%= album.title %> - Lanzamiento: <%= album.release_date %>
+                            <% if (album.songs && album.songs.length > 0) { %>
+                                <ul class="album_songs">
+                                    <% album.songs.forEach(song => { %>
+                                        <li>
+                                            <%= song.title %>
+                                            <audio controls controlsList="nodownload">
+                                                <source src="<%= song.file_path %>" type="audio/mpeg">
+                                                Tu navegador no soporta el elemento audio.
+                                            </audio>
+                                        </li>
+                                    <% }); %>
+                                </ul>
+                            <% } else { %>
+                                <p>No hay canciones en este álbum.</p>
+                            <% } %>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>No hay álbumes disponibles.</p>
+            <% } %>
+        </div>    
+    </div>
+</body>
+</html>

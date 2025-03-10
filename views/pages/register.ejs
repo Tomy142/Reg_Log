@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Registro: Un mar de musicas</title>
+        <link rel="stylesheet" href="/css/register_style.css">
+    </head>
+    <body>
+        <h1 class="form_title">Formulario de Registro</h1>
+        <% if(typeof error !== 'undefined') { %>
+            <div class="error-box"><%= error %></div>
+        <% } %>
+        <form class="form_s" action="/register" method="POST">
+            <h4>Usuario:</h4>
+            <input type="text" required minlength="3" name="user" id="user" placeholder="Ingrese su usuario aquí"> 
+
+            <h4>Contraseña:</h4>
+            <div class="password-container">
+                <input type="password" required minlength="8" name="password" id="password" placeholder="Ingrese su contraseña aquí">
+                <button type="button" class="toogle-password" onclick="togglePassword('password')">👁️</button>
+            </div>
+            
+            <h4> Confirmar contraseña:</h4>
+            <div class="password-container">
+                <input type="password" required minlength="8" name="confirm_password" id="confirm_password" placeholder="Confirme su contraseña aquí">
+                <button type="button" class="toogle-password" onclick="togglePassword('confirm_password')">👁️</button>
+            </div>
+
+            <h4>Email:</h4>
+            <input type="email" name="email" id="email" placeholder="Ingrese su email aquí" required>
+            
+            <h4>Elija una opcion:</h4>
+            <div class="radio-group">
+                <label for="artist">Artista</label>
+                <input type="radio" id="artist" name="role" value="artist" required>
+                
+                <label for="band">Banda</label>
+                <input type="radio" id="band" name="role" value="band" required>
+                
+                <label for="listener">Oyente</label>
+                <input type="radio" id="listener" name="role" value="listener" required>
+            </div>
+
+            <input class="submit_b" type="submit" value="Registrarse">
+            <a class="log_red" href="/login">Si ya tenes una cuenta. Inicia sesion aquí</a>
+        </form>
+        
+        <script>
+            function togglePassword(inputId){
+                const input = document.getElementById(inputId);
+                input.type = input.type === "password" ? "text" : "password";
+            }
+        </script>
+    </body>
+</html>
+

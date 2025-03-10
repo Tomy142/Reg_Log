@@ -1,0 +1,88 @@
+body{
+    background: linear-gradient(to bottom ,steelblue, lightgrey);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+
+}
+
+.welcome{
+    color:wheat;
+    font-family:Merriweather;
+    font-size: 60px;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 200px;
+    text-shadow: 
+        -1px -1px 0 black,  /* Sombra superior izquierda */
+         1px -1px 0 black,  /* Sombra superior derecha */
+        -1px  1px 0 black,  /* Sombra inferior izquierda */
+         1px  1px 0 black;  /* Sombra inferior derecha */
+}
+
+.basic_info{
+    color:wheat;
+    font-family: Merriweather;
+    text-align: center;
+    margin: 10px -100;
+    text-shadow: 
+        -1px -1px 0 black,  /* Sombra superior izquierda */
+         1px -1px 0 black,  /* Sombra superior derecha */
+        -1px  1px 0 black,  /* Sombra inferior izquierda */
+         1px  1px 0 black;  /* Sombra inferior derecha */
+}
+.basic_info1{
+    color: wheat;
+    font-family: Merriweather;
+    text-align: center;
+    margin: 20px -200;
+    text-shadow: 
+        -1px -1px 0 black,  /* Sombra superior izquierda */
+         1px -1px 0 black,  /* Sombra superior derecha */
+        -1px  1px 0 black,  /* Sombra inferior izquierda */
+         1px  1px 0 black;  /* Sombra inferior derecha */
+}
+
+.login_call{
+    position: absolute;
+    top: 20px; /* Espacio desde el borde superior */
+    right: 20px; /* Pegado al borde derecho */
+    background-color: wheat;
+    color: steelblue;
+    font-family: Merriweather;
+    text-decoration: none; /* Quita el subrayado */
+    padding: 10px 20px; /* Tamaño del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 10px; /* Espacio entre los botones */
+    right: 130px;
+}
+
+.register_call {
+    position: absolute;
+    top: 20px; /* Espacio desde el borde superior */
+    right: 20px; /* Pegado al borde derecho */
+    background-color: wheat;
+    color: steelblue;
+    font-family: Merriweather;
+    text-decoration: none; /* Quita el subrayado */
+    padding: 10px 20px; /* Tamaño del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 10px; /* Espacio entre los botones */
+}
+
+
+.login_call:hover, .register_call:hover {
+    background-color: lightgrey; /* Cambia el color al pasar el cursor */
+    color: steelblue;
+}

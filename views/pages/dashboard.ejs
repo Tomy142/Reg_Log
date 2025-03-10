@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard- Un mar de músicas</title>
+    <link rel="stylesheet" href="/css/dashboard_style.css">
+</head>
+<body>
+    <!-- Barra superior -->
+    <div class="top_bar">
+        <h1 class="title_bar">Un mar de músicas</h1>
+        <%if(user.role === 'artist' || user.role === 'band'){%>
+            <!-- Cambiar el onclick para redirigir -->
+            <button class="add_m_btn" onclick="location.href='/add-content'">
+                <img class="add_m" src="/assets/img/añadir.png" alt="Añadir nuevo tema/álbum">
+            </button>
+            <button class="edit_btn" onclick="location.href='/edit-content'" >
+                <img class="edit_i" alt="Editar Albumes y Sencillos" src="/assets/img/edicion.png">
+            </button>
+            <button class="profile_btn" onclick="location.href='/profile'">
+                <img class="profile_i" src="/assets/img/perfil.png" alt="Mi Perfil">
+            </button>
+        <%}%>
+    </div>
+
+    <% if(typeof error!== 'undefined'){ %>
+        <div class="error-box"><%= error %></div>
+    <% } %>
+
+    <!-- Contenido segun rol -->
+    <% if (user.role === 'listener') { %>
+        <!--Dashboard para oyentes-->
+        <main>
+            <form id="search-form" class="search-form">
+                <input type="text" name="query" placeholder="Buscar artistas, canciones o álbumes..." required>
+                <button type="submit" >Buscar</button>
+            </form>
+            <div id="search-results" class="search-results-box" style="display:none;">
+                <h3>Resultados de la búsqueda:</h3>
+                <div id="songs-results"></div>
+                <div id="albums-results"></div>
+                <div id="artists-results"></div>
+                <div id="bands-results"></div>
+            </div>
+        </main>
+    <% } else { %>
+        <!-- Sección de mi música -->
+        <div class="my_music">
+            <h3>Mi música</h3>
+            <div class="music_box">
+                <% if(songs && songs.length > 0) { %>
+                    <ul class="song_list">
+                        <% songs.forEach(song => { %>
+                            <li>
+                                <%= song.title %> - Subida el <%= song.created_at %>
+                                <audio controls>
+                                    <source src="<%= song.file_path %>" type="audio/mpeg">
+                                    Tu navegador no soporta el elemento de audio.
+                                </audio>
+                            </li>
+                        <%}); %>
+                    </ul>
+                <% } else { %>
+                    <p class="empty_message">No hay canciones adjuntas</p>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Sección de mis álbumes -->
+        <div class="my_album">
+            <h3>Mis álbumes</h3>
+            <div class="album_box">
+                <% if(albums && albums.length > 0) {%> 
+                    <ul class="album_list">
+                        <% albums.forEach(album => { %>
+                            <li>
+                                <%= album.title %> -Lanzamiento: <%= album.release_date %>
+                                <% if (album.songs && album.songs.length > 0) { %>
+                                    <ul class="album_songs">
+                                        <% album.songs.forEach(song => { %>
+                                            <li>
+                                                <%= song.title %>
+                                                <audio controls>
+                                                    <source src="<%= song.file_path %>" type="audio/mpeg">
+                                                    Tu navegador no soporta el elemento de audio.
+                                                </audio>
+                                            </li>
+                                        <% }); %>
+                                    </ul>
+                            <% } else { %>
+                                <p> No hay canciones en este álbum</p>
+                            <% } %>    
+                        </li>
+                        <% }); %>
+                    </ul>
+                <% } else { %>
+                    <p class="empty_message">No hay álbumes adjuntos</p>
+                <% } %>
+            </div>
+        </div>
+    <% } %>
+
+    <!-- Botón de logout -->
+    <a class="logout_b" href="/logout">
+        <img class="logout_i" src="/assets/img/cerrar_sesion.png" alt="Cerrar sesión">
+    </a>
+
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

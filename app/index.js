@@ -1,47 +1,67 @@
-import express from "express";
-//Arreglar dirname
+import express from 'express';
 import path from 'path';
-import { fileURLToPath } from "url";
-import { methods as authentication} from "./public/Controllers/authy_controller.js";
-//exec node: npm run dev
-const __dirname= path.dirname(fileURLToPath(import.meta.url));
+import { fileURLToPath } from 'url';
+import authRoutes from "./routes/auth.js";
+import jwt from "jsonwebtoken";
+import cookieParser from "cookie-parser";
 
-//Server
+
 const app = express();
-app.set("port", 4000);
-app.listen(app.get("port"));
-console.log("Servidor corriendo en puerto", app.get("port"));
 
-//Configuracion
-app.use(express.static(path.join(__dirname,'public' )));
-app.use(express.json());
+// Obtener la ruta del directorio actual (donde está el archivo index.js)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-//Motor de plantillas
-//app.set('view engine', 'ejs');
+// Archivos estáticos desde la carpeta public
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.urlencoded({extended:true}));
+app.use(cookieParser());
 
-//
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname,"../views/pages"));
 
+const protect =(req, res, next)=>{
+    const token =req.cookies.token;
+    if(!token){
+        console.log("No se encontro token, redirigiendo al /login");
+        return res.redirect("/login");
+    }
+    try{
+        const decoded =jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        console.log("Token valido, usuario:", req.user);
+        next();
+    }catch(error){
+        console.error("Token invalido:", error);
+        res.redirect("/login");
+    }
+};
 
-//Rutas
+app.use("/", authRoutes);
 
-app.get('/register', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/Register/HTML/register.html'));
+app.get("/",(req, res)=>{
+    res.render("welcome");
 });
 
-// Ruta para /login
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/Login/HTML/login.html'));
+app.get("/register",(req, res)=>{
+    res.render("register");
 });
 
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'pages/Welcome/HTML/welcome.html'));
+app.get("/login",(req, res)=>{
+    res.render("login");
 });
 
+app.get("/dashboard", protect,(req, res)=>{
+    res.render("dashboard",{user: req.user});
+});
 
+app.get("/edit-content", protect,(req, res)=>{
+    res.render("edit_content");
+});
 
-/*app.get("/", (req, res) => res.sendFile(path.join(__dirname, 'pages', 'Welcome', 'HTML', 'welcome.html')));
-app.get("/login", (req, res) => res.sendFile(path.join(__dirname, 'pages', 'Login', 'HTML', 'login.html')));
-app.post("/api/login",authentication.login);
-app.get("/register", (req, res) => res.sendFile(path.join(__dirname, 'pages', 'Register', 'HTML', 'register.html')));
-app.post("/api/register",authentication.register);
-app.get("/dashboard", (req, res) => res.sendFile(path.join(__dirname, 'pages', 'Dashboard', 'HTML', 'dashboard.html')));*/
+// Iniciar servidor
+const PORT = process.env.PORT || 4000;
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
